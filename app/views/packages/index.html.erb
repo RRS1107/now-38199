@@ -1,0 +1,23 @@
+一覧ページ
+    <table border="1">
+    <tr>
+    <th>配達日</th>
+    <th>集荷日</th>
+    <th>送り状NO</th>
+    <th>時間指定</th>
+    <th>配送先</th>
+    <th>集荷元</th>
+    <th>個口数</th>
+    </tr>
+    <% @package.each do |package| %>
+      <tr>
+      <td><%= package.delivery_date %></td>
+      <td><%= package.pickup_date %></td>
+      <td><%= package.invoice_number %></td>
+      <td><%= package.preferred_time.name %></td>
+      <td><%= package.delivery_area.name %></td>
+      <td><%= package.collection_area.name %></td>
+      <td><%= package.unit %></td>
+      </tr>
+<% end %>
+<%= link_to "もどる", root_path %>

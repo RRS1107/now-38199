@@ -10,7 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_25_070912) do
+ActiveRecord::Schema.define(version: 2022_07_27_134805) do
+
+  create_table "homes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "packages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.date "delivery_date", null: false
+    t.date "pickup_date", null: false
+    t.string "invoice_number", null: false
+    t.integer "preferred_time_id", null: false
+    t.integer "delivery_area_id", null: false
+    t.integer "collection_area_id", null: false
+    t.integer "unit", null: false
+    t.bigint "staff_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["staff_id"], name: "index_packages_on_staff_id"
+  end
 
   create_table "staffs", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "encrypted_password", default: "", null: false
@@ -25,4 +44,5 @@ ActiveRecord::Schema.define(version: 2022_07_25_070912) do
     t.index ["staff_code"], name: "index_staffs_on_staff_code", unique: true
   end
 
+  add_foreign_key "packages", "staffs"
 end

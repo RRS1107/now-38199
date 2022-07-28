@@ -1,0 +1,20 @@
+<%= form_with(model: @package, local: true) do |f| %>
+<%= render 'layouts/error_messages', model: @package %>
+  配達希望日
+  <%= f.date_field :delivery_date, class: 'date-select' %><br/>
+  集荷日
+  <%= f.date_field :pickup_date, class: 'date-select' %><br/>
+  送り状NO
+  <%= f.text_field :invoice_number, placeholder: "送り状NO"%><br/>
+  配達希望時間
+  <%= f.collection_select(:preferred_time_id, PreferredTime.all, :id, :name, {},) %><br/>
+  お届け先
+  <%= f.collection_select(:delivery_area_id, DeliveryArea.all, :id, :name, {},) %><br/>
+  集荷地域
+  <%= f.collection_select(:collection_area_id, CollectionArea.all, :id, :name, {},) %><br/>
+  個口数
+  <%= f.text_field :unit, placeholder: "個口数" %>
+  <%= f.submit "登録する" %>
+<% end %>
+
+<%= link_to "もどる", root_path %>
