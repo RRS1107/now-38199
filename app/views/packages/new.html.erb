@@ -1,20 +1,36 @@
-<%= form_with(model: @package, local: true) do |f| %>
-<%= render 'layouts/error_messages', model: @package %>
-  配達希望日
-  <%= f.date_field :delivery_date, class: 'date-select' %><br/>
-  集荷日
-  <%= f.date_field :pickup_date, class: 'date-select' %><br/>
-  送り状NO
-  <%= f.text_field :invoice_number, placeholder: "送り状NO"%><br/>
-  配達希望時間
-  <%= f.collection_select(:preferred_time_id, PreferredTime.all, :id, :name, {},) %><br/>
-  お届け先
-  <%= f.collection_select(:delivery_area_id, DeliveryArea.all, :id, :name, {},) %><br/>
-  集荷地域
-  <%= f.collection_select(:collection_area_id, CollectionArea.all, :id, :name, {},) %><br/>
-  個口数
-  <%= f.text_field :unit, placeholder: "個口数" %>
-  <%= f.submit "登録する" %>
-<% end %>
+<%= render partial: "package" %>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<div class="container">
+  <div class="form-group form-inline input-group-sm">
+    <%= form_with(model: @package, local: true) do |f| %>
+      <%= render 'layouts/error_messages', model: @package %>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>配達希望日</th>
+              <th>送り状NO</th>
+              <th>配達希望時間</th>
+              <th>お届け先</th>
+              <th>集荷地域</th>
+              <th>個口数</th>
+            </tr>
+            <br/>
+          </thead>
+          <tbody>  
+            <td><%= f.date_field :delivery_date, class: 'date-select' %></td>
+            <td><%= f.text_field :invoice_number, placeholder: "例:123412341234"%></td>
+            <td><%= f.collection_select(:preferred_time_id, PreferredTime.all, :id, :name, {},) %></td>
+            <td><%= f.collection_select(:delivery_area_id, Prefecture.all, :id, :name, {},) %></td>
+            <td><%= f.collection_select(:collection_area_id, Prefecture.all, :id, :name, {},) %></td>
+            <td><%= f.text_field :unit, placeholder: "例:1" %></td>
+          </tbody>
+        </table>    
+            <p align="center"><%= f.submit "登録する",class:"btn btn-secondary" %>
+            <%= link_to "もどる", root_path, class:"btn btn-secondary" %>
+    <% end %>
+  </div>
+</div>
 
-<%= link_to "もどる", root_path %>
+  

@@ -1,4 +1,6 @@
 class Staff < ApplicationRecord
+  has_many :packages
+  has_many :records
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -7,7 +9,7 @@ class Staff < ApplicationRecord
 
   validates :staff_code, presence: true
 
-  has_many :packages
+  
 
   def self.find_first_by_auth_conditions(warden_conditions)
     conditions = warden_conditions.dup

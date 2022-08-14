@@ -11,8 +11,8 @@
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav ">
           <% if staff_signed_in? %>
-            <%= link_to '一覧ページ', packages_path,class:"nav-link text-dark" %> 
             <%= link_to '登録する', new_package_path,class:"nav-link text-dark" %> 
+            <%= link_to '一覧ページ', packages_path,class:"nav-link text-dark" %> 
             <%= link_to 'ログアウト', destroy_staff_session_path,class:"nav-link text-dark",method: :delete %> 
           <% else %>
             <%= link_to '新規登録', new_staff_registration_path,class:"nav-link text-dark" %> 
@@ -21,11 +21,7 @@
         </div>
     </div>
 </nav>
-<body>
-  <div style="width:200px">
-    <%= image_tag 'sample.png', class:"img-fluid", alt:"" %>
-  </div>
-</body>
+
 <div class="fixed-bottom">
   <footer id="footer" class="bg-light text-light"style="height:50px; ">
     <p align="center" class="text-dark">©️NOW </p>

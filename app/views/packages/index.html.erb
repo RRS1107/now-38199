@@ -1,23 +1,76 @@
-一覧ページ
-    <table border="1">
-    <tr>
-    <th>配達日</th>
-    <th>集荷日</th>
-    <th>送り状NO</th>
-    <th>時間指定</th>
-    <th>配送先</th>
-    <th>集荷元</th>
-    <th>個口数</th>
-    </tr>
-    <% @package.each do |package| %>
-      <tr>
-      <td><%= package.delivery_date %></td>
-      <td><%= package.pickup_date %></td>
-      <td><%= package.invoice_number %></td>
-      <td><%= package.preferred_time.name %></td>
-      <td><%= package.delivery_area.name %></td>
-      <td><%= package.collection_area.name %></td>
-      <td><%= package.unit %></td>
-      </tr>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand text-dark" href="#">
+      <%= link_to image_tag("logo.png", size:"45x45"), '/' %>
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav ">
+            <%= link_to '一覧ページ', packages_path,class:"nav-link text-dark" %> 
+            <%= link_to '登録する', new_package_path,class:"nav-link text-dark" %> 
+            <%= link_to 'ヤマト運輸', 'https://toi.kuronekoyamato.co.jp/cgi-bin/tneko',class:"nav-link text-dark" %> 
+            <%= link_to '佐川運輸', 'https://k2k.sagawa-exp.co.jp/p/sagawa/web/okurijoinput.jsp?_ga=2.188184431.693813480.1659515941-810523543.1659515941',class:"nav-link text-dark" %> 
+            <%= link_to 'ログアウト', destroy_staff_session_path,class:"nav-link text-dark",method: :delete %> 
+        </div>
+    </div>
+</nav>
+      <%= form_tag(packages_path, method: :get) do %>
+      <p align="center">集荷日を選択してください
+      <lave><input type="date" value=@date name="package[pickup_date]" id="package_pickup_date">
+      <input type="submit" class="btn btn-secondary" value="確認する"></p>
 <% end %>
-<%= link_to "もどる", root_path %>
+<font size="+1"><%= "集荷日#{@date}" %></font>
+<BR>
+<%= form_with(url: records_path, local: true) do |f| %>
+   <table class="table">
+      <table border="1">
+         <table class="table">
+            <th>配達日</th>
+            <th>集荷日</th>
+            <th>送り状NO</th>
+            <th>時間指定</th>
+            <th>配送先</th>
+            <th>集荷元</th>
+            <th>個口数</th>
+            <th>登録者</th>
+            <th>確認</th>
+            <th>確認者</th>
+            </tr>
+         </thead>
+         <tbody>
+               <% @packages.each do |package| %>
+                  <tr>
+                     <td><%= package.delivery_date %></td>
+                     <td><%= package.pickup_date %></td>
+                     <td><%= link_to edit_package_path(package.id),method: :get do %>
+                     <%= package.invoice_number %></td>
+                     <% end %>
+                     <td><%= package.preferred_time.name %></td>
+                     <td><%= package.delivery_area.name %></td>
+                     <td><%= package.collection_area.name %></td>
+                     <td><%= package.unit %></td>
+                     <td><%= package.staff.name %></td>
+                     <td>
+                     <% unless package.record %>
+                        <%= f.check_box :package_ids, {multiple: true},package.id,false %>
+                     <% end %>
+                     </td>
+                     <td><%= package.record&.staff&.name %></td>
+                  </tr>
+               <% end %>
+         </tbody>
+      </table>
+   </table>
+   <BR>
+   <p align="center"><%= f.submit "登録する",class:"btn btn-secondary", data: { confirm: '登録しますか？'} %>&nbsp;&nbsp;&nbsp;
+   <%= link_to "もどる", root_path,class:"btn btn-secondary" %></p>
+<% end %>
+<div class="fixed-bottom">
+  <footer id="footer" class="bg-light text-light"style="height:50px; ">
+    <p align="center" class="text-dark">©️NOW </p>
+  </footer>
+</div>    

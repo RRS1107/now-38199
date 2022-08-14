@@ -1,5 +1,7 @@
 class Package < ApplicationRecord
+
   belongs_to :staff
+  has_one :record, dependent: :destroy
 
   validates :delivery_date, presence: true
   validates :pickup_date, presence: true  
@@ -10,7 +12,7 @@ class Package < ApplicationRecord
   validates :unit, presence: true  
 
   extend ActiveHash::Associations::ActiveRecordExtensions
-  belongs_to :delivery_area
-  belongs_to :collection_area
+  belongs_to :delivery_area, class_name: 'Prefecture'
+  belongs_to :collection_area, class_name: 'Prefecture'
   belongs_to :preferred_time
 end
